@@ -6,15 +6,10 @@ print('AppEngine Version: ' .. Engine.getVersion())
 local DELAY = 700 -- ms between visualization steps for demonstration purpose
 
 -- Creating viewer
-local viewer = View.create("viewer2D1")
+local viewer = View.create()
 
 -- Setting up graphical overlay attributes
-local decoration = View.ShapeDecoration.create()
-decoration:setLineColor(0, 230, 0) -- Green
-
-local textDecoration = View.TextDecoration.create()
-textDecoration:setSize(50)
-textDecoration:setPosition(20, 50)
+local textDecoration = View.TextDecoration.create():setSize(50):setPosition(20, 50)
 
 --End of Global Scope-----------------------------------------------------------
 
@@ -41,8 +36,8 @@ local function main()
   for i = highThrStart, highThrStop, 1 do
     local img3 = img2:canny(i, lowThrStart)
     viewer:clear()
-    local imageID = viewer:addImage(img3)
-    viewer:addText('Thresholds = ' .. i .. ', ' .. lowThrStart, textDecoration, nil, imageID)
+    viewer:addImage(img3)
+    viewer:addText('Thresholds = ' .. i .. ', ' .. lowThrStart, textDecoration)
     viewer:present() -- presenting single steps
     Script.sleep(DELAY) -- for demonstration purpose only
   end
@@ -53,8 +48,8 @@ local function main()
   for i = lowThrStart, lowThrStop, -1 do
     local img3 = img2:canny(highThrStop, i)
     viewer:clear()
-    local imageID = viewer:addImage(img3)
-    viewer:addText('Thresholds = ' .. highThrStop .. ', ' .. i, textDecoration, nil, imageID)
+    viewer:addImage(img3)
+    viewer:addText('Thresholds = ' .. highThrStop .. ', ' .. i, textDecoration)
     viewer:present() -- presenting single steps
     Script.sleep(DELAY) -- for demonstration purpose only
   end
